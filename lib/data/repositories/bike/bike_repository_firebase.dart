@@ -4,7 +4,7 @@ import '../../../model/bike/bike.dart';
 import '../../dtos/bike_dtos.dart'; 
 import 'bike_repository.dart';
 
-class BikeRepositoryFirebase implements BikeRepository {
+ class BikeRepositoryFirebase implements BikeRepository {
   final Uri bikesUri = Uri.https(
     'rental-bike-18cfe-default-rtdb.asia-southeast1.firebasedatabase.app',
     'Bikes.json',
@@ -43,6 +43,26 @@ class BikeRepositoryFirebase implements BikeRepository {
       return null;
     } catch (e) {
       return null;
+    }
+  }
+  @override
+  Future<void> bookBike(String bikeId) async {
+    final Uri updateUri = Uri.https(
+      'rental-bike-18cfe-default-rtdb.asia-southeast1.firebasedatabase.app',
+      'Bikes/$bikeId.json',
+    );
+
+    try {
+      final response = await http.patch(
+        updateUri,
+        body: json.encode({'status': 'booked'}),
+      );
+
+      if (response.statusCode != 200) {
+        throw Exception("Failed to book bike");
+      }
+    } catch (e) {
+      throw Exception("Booking error: $e");
     }
   }
 }

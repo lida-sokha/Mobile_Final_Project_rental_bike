@@ -6,93 +6,201 @@ import 'booking_success_screen.dart';
 
 class BookingScreen extends StatelessWidget {
   final Bike bike;
+  final String dockNumber;
+  final String stationName;
 
-  const BookingScreen({super.key, required this.bike});
+  const BookingScreen({
+    super.key,
+    required this.bike,
+    required this.dockNumber,
+    required this.stationName,
+  });
 
   @override
   Widget build(BuildContext context) {
     final vm = context.watch<BookingViewModel>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Book a Bike")),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0.5,
+        leading: IconButton(
+          icon: Container(
+            padding: const EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(Icons.arrow_back, color: Colors.black, size: 18),
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: const Text(
+          "Book a Bike",
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Bike Info
+            const SizedBox(height: 12),
+            const Text(
+              "Your Selected Bike",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            ),
+            const SizedBox(height: 8),
             Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.orange),
+                color: const Color(0xFFFFF8EC),
+                border: Border.all(color: Colors.orange.shade300),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.orange.shade100,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Icon(Icons.pedal_bike, color: Colors.orange[700]),
+                  ),
+                  const SizedBox(width: 12),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Bike ${bike.id}",
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        "Bike #${bike.id}",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
                       ),
-                      Text(bike.modelName),
+                      const SizedBox(height: 2),
+                      Text(
+                        "Dock $dockNumber",
+                        style: TextStyle(color: Colors.grey[600], fontSize: 13),
+                      ), // ✅ FIXED: dockNumber
                     ],
                   ),
-                  const Chip(label: Text("Classic")),
                 ],
               ),
             ),
-
-            const SizedBox(height: 20),
-
-            // Pass (static)
+            const SizedBox(height: 16),
+            const Text(
+              "Booking summary",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            ),
+            const SizedBox(height: 8),
             Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: Colors.green[200],
+                color: const Color(0xFFFFF8EC),
+                border: Border.all(color: Colors.orange.shade200),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: const Row(
+              child: Column(
                 children: [
-                  Icon(Icons.credit_card),
-                  SizedBox(width: 10),
-                  Text("Monthly Pass - Active"),
+                  _summaryRow("Station", stationName), // ✅ FIXED: stationName
+                  _divider(),
+                  _summaryRow("Dock", dockNumber), // ✅ FIXED: dockNumber
+                  _divider(),
+                  _summaryRow("Bike", "#${bike.id}"),
+                  _divider(),
+                  _summaryRow("Status", bike.status),
                 ],
               ),
             ),
-
             const Spacer(),
-
-            // Confirm Button
-            ElevatedButton(
-              onPressed: bike.status == "available"
-                  ? () async {
-                      await vm.bookBike(bike.id);
-
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => BookingSuccessScreen(bike: bike),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green[500],
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                onPressed: bike.status == "available"
+                    ? () async {
+                        await vm.bookBike(bike.id);
+                        if (context.mounted) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => BookingSuccessScreen(
+                                bike: bike,
+                                dockNumber:
+                                    dockNumber, // ✅ FIXED: Success Parameter
+                                stationName:
+                                    stationName, // ✅ FIXED: Success Parameter
+                              ),
+                            ),
+                          );
+                        }
+                      }
+                    : null,
+                child: vm.isLoading
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
                         ),
-                      );
-                    }
-                  : null,
-              child: vm.isLoading
-                  ? const CircularProgressIndicator()
-                  : const Text("Confirm Booking"),
+                      )
+                    : const Text(
+                        "Confirm Booking",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      ),
+              ),
             ),
-
             const SizedBox(height: 10),
-
-            // Cancel
-            OutlinedButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("Cancel"),
+            SizedBox(
+              width: double.infinity,
+              child: TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(fontSize: 15, color: Colors.grey[600]),
+                ),
+              ),
             ),
           ],
         ),
       ),
     );
   }
+
+  Widget _summaryRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 9),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: TextStyle(color: Colors.grey[600], fontSize: 13)),
+          Text(
+            value,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _divider() => Divider(color: Colors.orange.shade100, height: 1);
 }

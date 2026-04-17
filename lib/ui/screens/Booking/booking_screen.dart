@@ -89,7 +89,7 @@ class BookingScreen extends StatelessWidget {
                       Text(
                         "Dock $dockNumber",
                         style: TextStyle(color: Colors.grey[600], fontSize: 13),
-                      ), // ✅ FIXED: dockNumber
+                      ), // fix dockNumber
                     ],
                   ),
                 ],
@@ -110,9 +110,9 @@ class BookingScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  _summaryRow("Station", stationName), // ✅ FIXED: stationName
+                  _summaryRow("Station", stationName), 
                   _divider(),
-                  _summaryRow("Dock", dockNumber), // ✅ FIXED: dockNumber
+                  _summaryRow("Dock", dockNumber), 
                   _divider(),
                   _summaryRow("Bike", "#${bike.id}"),
                   _divider(),
@@ -141,9 +141,9 @@ class BookingScreen extends StatelessWidget {
                               builder: (_) => BookingSuccessScreen(
                                 bike: bike,
                                 dockNumber:
-                                    dockNumber, // ✅ FIXED: Success Parameter
+                                    dockNumber,
                                 stationName:
-                                    stationName, // ✅ FIXED: Success Parameter
+                                    stationName,
                               ),
                             ),
                           );

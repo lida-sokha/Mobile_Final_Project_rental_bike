@@ -3,14 +3,14 @@ import '../../../model/bike/bike.dart';
 
 class BookingSuccessScreen extends StatelessWidget {
   final Bike bike;
-  final String dockNumber;  // ✅ FIXED: Parameter Added
-  final String stationName; // ✅ FIXED: Parameter Added
+  final String dockNumber;  
+  final String stationName; 
 
   const BookingSuccessScreen({
     super.key,
     required this.bike,
-    required this.dockNumber,  // ✅ FIXED: Constructor updated
-    required this.stationName, // ✅ FIXED: Constructor updated
+    required this.dockNumber,  
+    required this.stationName, 
   });
 
   @override
@@ -63,9 +63,9 @@ class BookingSuccessScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  _infoRow("Station", stationName), // ✅ FIXED: Use stationName
+                  _infoRow("Station", stationName), // FIXED: Use stationName
                   _divider(),
-                  _infoRow("Dock", dockNumber),     // ✅ FIXED: Use dockNumber
+                  _infoRow("Dock", dockNumber),     // FIXED: Use dockNumber
                   _divider(),
                   _infoRow("Bike", "#${bike.id}"),
                   _divider(),

@@ -17,7 +17,7 @@ class StationHeader extends StatelessWidget {
     final viewModel = context.watch<StationDetailViewModel>();
     final List<DockWithBike> items = viewModel.dockValue.data ?? [];
 
-    // ✅ LOGIC FIX: A bike is ONLY available if status is exactly 'available'
+    //  LOGIC FIX: A bike is ONLY available if status is exactly 'available'
     // This ensures 'in_use' or 'booked' bikes are NOT counted here.
     final int availableCount = items.where((i) {
       return i.isBusy && i.bike?.status == "available";

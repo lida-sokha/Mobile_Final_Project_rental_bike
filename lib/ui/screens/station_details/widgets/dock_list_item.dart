@@ -23,7 +23,7 @@ class DockListItem extends StatelessWidget {
     final bool hasBike = item.isBusy && item.bike != null;
     final String? status = item.bike?.status;
 
-    // ✅ LOGIC FIX: Strictly define states
+    // LOGIC FIX: Strictly define states
     final bool isActuallyAvailable = hasBike && status == "available";
     final bool isAlreadyOccupied =
         hasBike && (status == "booked" || status == "in_use");
@@ -53,7 +53,7 @@ class DockListItem extends StatelessWidget {
       ),
       trailing: hasBike
           ? CustomButton(
-              // ✅ UI FIX: Change button text if the bike is in_use or booked
+              // UI FIX: Change button text if the bike is in_use or booked
               text: isAlreadyOccupied ? "View" : "Unlock",
               onPressed: () async {
                 await Navigator.push(

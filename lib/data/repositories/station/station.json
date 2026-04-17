@@ -1,0 +1,181 @@
+{
+    "st1": {
+      "name": "Koh Pich Station",
+      "latitude": 11.5564,
+      "longitude": 104.9282,
+      "docks": {
+        "d1": { "dockNumber": "A1", "bikeId": "bike1" },
+        "d2": { "dockNumber": "A2", "bikeId": null },
+        "d3": { "dockNumber": "A3", "bikeId": "bike2" },
+        "d4": { "dockNumber": "A4", "bikeId": null },
+        "d5": { "dockNumber": "A5", "bikeId": "bike3" },
+        "d6": { "dockNumber": "A6", "bikeId": null },
+        "d7": { "dockNumber": "A7", "bikeId": "bike4" },
+        "d8": { "dockNumber": "A8", "bikeId": null },
+        "d9": { "dockNumber": "A9", "bikeId": "bike5" },
+        "d10": { "dockNumber": "A10", "bikeId": null }
+      }
+    },
+
+    "st2": {
+      "name": "Independence Monument Station",
+      "latitude": 11.5560,
+      "longitude": 104.9289,
+      "docks": {
+        "d1": { "dockNumber": "B1", "bikeId": "bike6" },
+        "d2": { "dockNumber": "B2", "bikeId": null },
+        "d3": { "dockNumber": "B3", "bikeId": "bike7" },
+        "d4": { "dockNumber": "B4", "bikeId": null },
+        "d5": { "dockNumber": "B5", "bikeId": "bike8" },
+        "d6": { "dockNumber": "B6", "bikeId": null },
+        "d7": { "dockNumber": "B7", "bikeId": "bike9" },
+        "d8": { "dockNumber": "B8", "bikeId": null },
+        "d9": { "dockNumber": "B9", "bikeId": "bike10" },
+        "d10": { "dockNumber": "B10", "bikeId": null }
+      }
+    },
+
+    "st3": {
+      "name": "Central Market Station",
+      "latitude": 11.5696,
+      "longitude": 104.9210,
+      "docks": {
+        "d1": { "dockNumber": "C1", "bikeId": "bike11" },
+        "d2": { "dockNumber": "C2", "bikeId": null },
+        "d3": { "dockNumber": "C3", "bikeId": "bike12" },
+        "d4": { "dockNumber": "C4", "bikeId": null },
+        "d5": { "dockNumber": "C5", "bikeId": "bike13" },
+        "d6": { "dockNumber": "C6", "bikeId": null },
+        "d7": { "dockNumber": "C7", "bikeId": "bike14" },
+        "d8": { "dockNumber": "C8", "bikeId": null },
+        "d9": { "dockNumber": "C9", "bikeId": "bike15" },
+        "d10": { "dockNumber": "C10", "bikeId": null }
+      }
+    },
+
+    "st4": {
+      "name": "Wat Phnom Station",
+      "latitude": 11.5763,
+      "longitude": 104.9282,
+      "docks": {
+        "d1": { "dockNumber": "D1", "bikeId": "bike16" },
+        "d2": { "dockNumber": "D2", "bikeId": null },
+        "d3": { "dockNumber": "D3", "bikeId": "bike17" },
+        "d4": { "dockNumber": "D4", "bikeId": null },
+        "d5": { "dockNumber": "D5", "bikeId": "bike18" },
+        "d6": { "dockNumber": "D6", "bikeId": null },
+        "d7": { "dockNumber": "D7", "bikeId": "bike19" },
+        "d8": { "dockNumber": "D8", "bikeId": null },
+        "d9": { "dockNumber": "D9", "bikeId": "bike20" },
+        "d10": { "dockNumber": "D10", "bikeId": null }
+      }
+    },
+
+    "st5": {
+      "name": "Riverside Station",
+      "latitude": 11.5700,
+      "longitude": 104.9300,
+      "docks": {
+        "d1": { "dockNumber": "E1", "bikeId": "bike21" },
+        "d2": { "dockNumber": "E2", "bikeId": null },
+        "d3": { "dockNumber": "E3", "bikeId": "bike22" },
+        "d4": { "dockNumber": "E4", "bikeId": null },
+        "d5": { "dockNumber": "E5", "bikeId": "bike23" },
+        "d6": { "dockNumber": "E6", "bikeId": null },
+        "d7": { "dockNumber": "E7", "bikeId": "bike24" },
+        "d8": { "dockNumber": "E8", "bikeId": null },
+        "d9": { "dockNumber": "E9", "bikeId": "bike25" },
+        "d10": { "dockNumber": "E10", "bikeId": null }
+      }
+    },
+
+    "st6": {
+      "name": "Aeon Mall 1 Station",
+      "latitude": 11.5446,
+      "longitude": 104.9339,
+      "docks": {
+        "d1": { "dockNumber": "F1", "bikeId": "bike26" },
+        "d2": { "dockNumber": "F2", "bikeId": null },
+        "d3": { "dockNumber": "F3", "bikeId": "bike27" },
+        "d4": { "dockNumber": "F4", "bikeId": null },
+        "d5": { "dockNumber": "F5", "bikeId": "bike28" },
+        "d6": { "dockNumber": "F6", "bikeId": null },
+        "d7": { "dockNumber": "F7", "bikeId": "bike29" },
+        "d8": { "dockNumber": "F8", "bikeId": null },
+        "d9": { "dockNumber": "F9", "bikeId": "bike30" },
+        "d10": { "dockNumber": "F10", "bikeId": null }
+      }
+    },
+
+    "st7": {
+      "name": "Tuol Sleng Museum Station",
+      "latitude": 11.5486,
+      "longitude": 104.9175,
+      "docks": {
+        "d1": { "dockNumber": "G1", "bikeId": null },
+        "d2": { "dockNumber": "G2", "bikeId": null },
+        "d3": { "dockNumber": "G3", "bikeId": null },
+        "d4": { "dockNumber": "G4", "bikeId": null },
+        "d5": { "dockNumber": "G5", "bikeId": null },
+        "d6": { "dockNumber": "G6", "bikeId": null },
+        "d7": { "dockNumber": "G7", "bikeId": null },
+        "d8": { "dockNumber": "G8", "bikeId": null },
+        "d9": { "dockNumber": "G9", "bikeId": null },
+        "d10": { "dockNumber": "G10", "bikeId": null }
+      }
+    },
+
+    "st8": {
+      "name": "Olympic Stadium Station",
+      "latitude": 11.5525,
+      "longitude": 104.9130,
+      "docks": {
+        "d1": { "dockNumber": "H1", "bikeId": "bike1" },
+        "d2": { "dockNumber": "H2", "bikeId": "bike2" },
+        "d3": { "dockNumber": "H3", "bikeId": "bike3" },
+        "d4": { "dockNumber": "H4", "bikeId": "bike4" },
+        "d5": { "dockNumber": "H5", "bikeId": "bike5" },
+        "d6": { "dockNumber": "H6", "bikeId": null },
+        "d7": { "dockNumber": "H7", "bikeId": null },
+        "d8": { "dockNumber": "H8", "bikeId": null },
+        "d9": { "dockNumber": "H9", "bikeId": null },
+        "d10": { "dockNumber": "H10", "bikeId": null }
+      }
+    },
+
+    "st9": {
+      "name": "Russian Market Station",
+      "latitude": 11.5350,
+      "longitude": 104.9165,
+      "docks": {
+        "d1": { "dockNumber": "I1", "bikeId": "bike6" },
+        "d2": { "dockNumber": "I2", "bikeId": "bike7" },
+        "d3": { "dockNumber": "I3", "bikeId": null },
+        "d4": { "dockNumber": "I4", "bikeId": null },
+        "d5": { "dockNumber": "I5", "bikeId": null },
+        "d6": { "dockNumber": "I6", "bikeId": null },
+        "d7": { "dockNumber": "I7", "bikeId": null },
+        "d8": { "dockNumber": "I8", "bikeId": null },
+        "d9": { "dockNumber": "I9", "bikeId": null },
+        "d10": { "dockNumber": "I10", "bikeId": null }
+      }
+    },
+
+    "st10": {
+      "name": "Royal Palace Station",
+      "latitude": 11.5625,
+      "longitude": 104.9310,
+      "docks": {
+        "d1": { "dockNumber": "J1", "bikeId": "bike8" },
+        "d2": { "dockNumber": "J2", "bikeId": "bike9" },
+        "d3": { "dockNumber": "J3", "bikeId": null },
+        "d4": { "dockNumber": "J4", "bikeId": null },
+        "d5": { "dockNumber": "J5", "bikeId": null },
+        "d6": { "dockNumber": "J6", "bikeId": null },
+        "d7": { "dockNumber": "J7", "bikeId": null },
+        "d8": { "dockNumber": "J8", "bikeId": null },
+        "d9": { "dockNumber": "J9", "bikeId": null },
+        "d10": { "dockNumber": "J10", "bikeId": null }
+      }
+    }
+}

@@ -7,7 +7,7 @@ import 'station_repository.dart';
 class StationRepositoryFirebase implements StationRepository {
   final Uri stationUri = Uri.https(
     'rental-bike-18cfe-default-rtdb.asia-southeast1.firebasedatabase.app',
-    'stations.json',
+    'Stations.json',
   );
 
   @override

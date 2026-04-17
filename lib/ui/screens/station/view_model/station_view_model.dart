@@ -29,21 +29,21 @@ class StationViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  String _searchQuery = '';
+  String searchQuery = '';
 
   void updateSearchQuery(String query) {
-    _searchQuery = query.toLowerCase().replaceAll(' ', '');
+    searchQuery = query.toLowerCase().replaceAll(' ', '');
     notifyListeners();
   }
 
   List<Station> get filteredStations {
     final allStations = stationValue.data ?? [];
-    if (_searchQuery.isEmpty) return allStations;
+    if (searchQuery.isEmpty) return allStations;
 
     return allStations.where((station) {
       final normalizedName = station.name.toLowerCase().replaceAll(' ', '');
 
-      return normalizedName.contains(_searchQuery);
+      return normalizedName.contains(searchQuery);
     }).toList();
   }
 }

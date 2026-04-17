@@ -5,7 +5,7 @@ class AppColors {
   static const Color redStation = Color(0xFFF19B9B);
   static const Color orangeStation = Color(0xFFFFD580);
   static const Color darkText = Color(0xFF26473D);
-
+  static const Color labelgreen = Color.fromARGB(255, 7, 173, 62);
   static const Color background = Color(0xFFF5F5F5);
   static const Color white = Colors.white;
 }

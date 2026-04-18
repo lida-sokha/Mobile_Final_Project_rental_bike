@@ -12,19 +12,7 @@ class StationMarker extends StatelessWidget {
 
   int getRealAvailableBikes(BuildContext context, Station station) {
     final viewModel = context.watch<StationViewModel>();
-    final allBikes = viewModel.allBikes;
-    
-    if (allBikes.isNotEmpty) {
-      return station.docks.where((dock) {
-        if (!dock.isBusy) return false;
-        final bike = allBikes.firstWhere(
-            (b) => b.id == dock.bikeId, 
-            orElse: () => Bike(id: dock.bikeId ?? '', status: 'unknown')
-        );
-        return bike.status == 'available';
-      }).length;
-    }
-    return station.availableBikes;
+    return station.getRealAvailableBikes(viewModel.allBikes);
   }
 
   Color getStationColor(int availableCount) {

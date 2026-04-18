@@ -52,7 +52,7 @@ class BookingSuccessScreen extends StatelessWidget {
             ),
             const SizedBox(height: 28),
 
-            // ✅ REUSED WIDGET: Same one used in BookingScreen
+            // REUSED WIDGET: Same one used in BookingScreen
             BookingSummaryCard(
               bike: bike,
               stationName: stationName,

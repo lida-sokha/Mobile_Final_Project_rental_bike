@@ -1,30 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../../../model/station/station.dart';
+import '../../../../../model/bike/bike.dart';
 import '../../../../theme/theme.dart';
+import '../../view_model/station_view_model.dart';
 
 class StationMarker extends StatelessWidget {
   final Station station;
 
   const StationMarker({super.key, required this.station});
 
-  Color getStationColor(Station station) {
-    if (station.availableBikes == 0) {
+  int getRealAvailableBikes(BuildContext context, Station station) {
+    final viewModel = context.watch<StationViewModel>();
+    final allBikes = viewModel.allBikes;
+    
+    if (allBikes.isNotEmpty) {
+      return station.docks.where((dock) {
+        if (!dock.isBusy) return false;
+        final bike = allBikes.firstWhere(
+            (b) => b.id == dock.bikeId, 
+            orElse: () => Bike(id: dock.bikeId ?? '', status: 'unknown')
+        );
+        return bike.status == 'available';
+      }).length;
+    }
+    return station.availableBikes;
+  }
+
+  Color getStationColor(int availableCount) {
+    if (availableCount == 0) {
       return AppColors.redStation;
-    } else if (station.availableBikes < 3) {
+    } else if (availableCount < 3) {
       return AppColors.orangeStation;
     } else {
       return AppColors.greenStation;
     }
   }
 
-  bool hasAvailableBikes(Station station) {
-    return station.availableBikes > 0;
+  bool hasAvailableBikes(int availableCount) {
+    return availableCount > 0;
   }
 
   @override
   Widget build(BuildContext context) {
-    final Color statusColor = getStationColor(station);
-    final bool hasBikes = hasAvailableBikes(station);
+    final int availableCount = getRealAvailableBikes(context, station);
+    final Color statusColor = getStationColor(availableCount);
+    final bool hasBikes = hasAvailableBikes(availableCount);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -47,7 +68,7 @@ class StationMarker extends StatelessWidget {
             children: [
               const SizedBox(width: 6),
               Text(
-                hasBikes ? '${station.availableBikes} bikes' : 'No bikes',
+                hasBikes ? '$availableCount bikes' : 'No bikes',
                 style: AppTextStyles.stationLabel,
               ),
             ],

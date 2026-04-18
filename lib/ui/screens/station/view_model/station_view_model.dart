@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import '../../../../model/station/station.dart';
+import '../../../../model/bike/bike.dart';
 import '../../../../data/repositories/station/station_repository.dart';
 import '../../../utils/async_value.dart';
+import '../../../../data/repositories/bike/bike_repository.dart';
 
 class StationViewModel extends ChangeNotifier {
   final StationRepository stationRepository;
+  final BikeRepository bikeRepository;
 
   AsyncValue<List<Station>> stationValue = AsyncValue.loading();
+  List<Bike> allBikes = [];
 
-  StationViewModel({required this.stationRepository}) {
+  StationViewModel({required this.stationRepository, required this.bikeRepository}) {
     _init();
   }
 
@@ -22,6 +26,7 @@ class StationViewModel extends ChangeNotifier {
 
     try {
       List<Station> station = await stationRepository.getAllStations();
+      allBikes = await bikeRepository.getAllBikes();
       stationValue = AsyncValue.success(station);
     } catch (e) {
       stationValue = AsyncValue.error(e);

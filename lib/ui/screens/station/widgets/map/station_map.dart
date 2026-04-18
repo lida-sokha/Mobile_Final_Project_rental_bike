@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:rental_bike/ui/screens/station_details/view_model/station_details_view_model.dart';
 import '../../../../../../model/station/station.dart';
+import '../../view_model/station_view_model.dart';
 import 'station_marker.dart';
 
 class StationMap extends StatelessWidget {
@@ -30,14 +32,17 @@ class StationMap extends StatelessWidget {
               height: 70,
               alignment: Alignment.topCenter,
               child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
+                onTap: () async {
+                  await Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (_) =>
                           StationDetailViewModel.create(station: station),
                     ),
                   );
+                  if (context.mounted) {
+                    context.read<StationViewModel>().getAllStations();
+                  }
                 },
                 child: StationMarker(station: station),
               ),

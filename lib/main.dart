@@ -18,13 +18,13 @@ List<InheritedProvider> get devProviders {
 
   return [
     Provider<StationRepository>(create: (_) => stationRepository),
+    Provider<BikeRepository>(create: (_) => bikeRepository),
     ChangeNotifierProvider<StationViewModel>(
       create: (context) => StationViewModel(
         stationRepository: context.read<StationRepository>(),
+        bikeRepository: context.read<BikeRepository>(),
       ),
     ),
-
-    Provider<BikeRepository>(create: (_) => bikeRepository),
 
     ChangeNotifierProvider<BookingViewModel>(
       create: (context) => BookingViewModel(context.read<BikeRepository>()),

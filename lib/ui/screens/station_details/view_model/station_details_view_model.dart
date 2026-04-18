@@ -6,10 +6,13 @@ import '../../../../model/station/station.dart';
 import '../../../../model/bike/bike.dart';
 import '../../../../model/dock_with_bike/dock_with_bike.dart';
 import '../../../../data/repositories/bike/bike_repository.dart';
-import '../../../utils/async_value.dart'; 
+import '../../../utils/async_value.dart';
 
 class StationDetailViewModel extends ChangeNotifier {
   final BikeRepository bikeRepository;
+
+  // Stores the station info so the UI can access stationName
+  Station? station;
 
   AsyncValue<List<DockWithBike>> dockValue = AsyncValue.loading();
 
@@ -22,7 +25,7 @@ class StationDetailViewModel extends ChangeNotifier {
         ChangeNotifierProvider(
           create: (context) => StationDetailViewModel(
             bikeRepository: context.read<BikeRepository>(),
-          ),
+          )..loadStationDetails(station), // Auto-load data on creation
         ),
       ],
       child: StationDetailsScreen(station: station),
@@ -30,13 +33,14 @@ class StationDetailViewModel extends ChangeNotifier {
   }
 
   Future<void> loadStationDetails(Station station) async {
+    this.station = station; // Save station reference
+
     dockValue = AsyncValue.loading();
     notifyListeners();
 
     try {
       final allBikes = await bikeRepository.getAllBikes();
 
-      // Join logic
       final items = station.docks.map((dock) {
         final Bike? matchedBike = (dock.bikeId != null)
             ? allBikes.firstWhere(
@@ -53,5 +57,12 @@ class StationDetailViewModel extends ChangeNotifier {
       dockValue = AsyncValue.error(e);
     }
     notifyListeners();
+  }
+
+  // Helper for the "Try Again" button in UI
+  void refresh() {
+    if (station != null) {
+      loadStationDetails(station!);
+    }
   }
 }

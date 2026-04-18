@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rental_bike/ui/widgets/label_box/label_box.dart';
 import '../../../../model/station/station.dart';
+import '../../../../model/dock_with_bike/dock_with_bike.dart';
 import '../../../theme/theme.dart';
+import '../view_model/station_details_view_model.dart';
 
 class StationHeader extends StatelessWidget {
   final Station station;
@@ -10,6 +13,19 @@ class StationHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Watch the ViewModel for real-time data updates
+    final viewModel = context.watch<StationDetailViewModel>();
+    final List<DockWithBike> items = viewModel.dockValue.data ?? [];
+
+    //  LOGIC FIX: A bike is ONLY available if status is exactly 'available'
+    // This ensures 'in_use' or 'booked' bikes are NOT counted here.
+    final int availableCount = items.where((i) {
+      return i.isBusy && i.bike?.status == "available";
+    }).length;
+
+    final int totalDocks = items.isNotEmpty ? items.length : station.totalSlots;
+    final int emptyCount = totalDocks - availableCount;
+
     return Container(
       width: double.infinity,
       decoration: const BoxDecoration(
@@ -62,7 +78,6 @@ class StationHeader extends StatelessWidget {
                 ],
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.only(left: 16, right: 16, bottom: 24),
               child: Row(
@@ -70,7 +85,7 @@ class StationHeader extends StatelessWidget {
                   Expanded(
                     child: LabelBox(
                       label: "Available",
-                      value: station.availableBikes.toString(),
+                      value: availableCount.toString(),
                       color: AppColors.white,
                     ),
                   ),
@@ -78,7 +93,7 @@ class StationHeader extends StatelessWidget {
                   Expanded(
                     child: LabelBox(
                       label: "Empty",
-                      value: station.emptySlots.toString(),
+                      value: emptyCount.toString(),
                       color: AppColors.white,
                     ),
                   ),
@@ -86,7 +101,7 @@ class StationHeader extends StatelessWidget {
                   Expanded(
                     child: LabelBox(
                       label: "Total docks",
-                      value: station.totalSlots.toString(),
+                      value: totalDocks.toString(),
                       color: AppColors.white,
                     ),
                   ),

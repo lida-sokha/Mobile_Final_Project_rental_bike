@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rental_bike/ui/utils/async_value.dart';
-
 import '../view_model/station_details_view_model.dart';
 import 'dock_list_item.dart';
 
@@ -21,51 +20,36 @@ class StationDetailContent extends StatelessWidget {
 
       case AsyncValueState.error:
         return Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.cloud_off, size: 60, color: Colors.redAccent),
-                const SizedBox(height: 16),
-                const Text(
-                  "Oops! Something went wrong",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  'Error: ${state.error}',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.red),
-                ),
-                TextButton(
-                  onPressed: () {
-                    //book page
-                  },
-                  child: const Text("Try Again"),
-                ),
-              ],
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.cloud_off, size: 60, color: Colors.redAccent),
+              const SizedBox(height: 16),
+              const Text(
+                "Something went wrong",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              TextButton(
+                onPressed: () => viewModel.refresh(),
+                child: const Text("Try Again"),
+              ),
+            ],
           ),
         );
 
       case AsyncValueState.success:
         final items = state.data ?? [];
+        if (items.isEmpty)
+          return const Center(child: Text("No docks available."));
 
-        if (items.isEmpty) {
-          return const Center(
-            child: Text("No docks are currently available at this station."),
-          );
-        }
         return ListView.builder(
-          padding: const EdgeInsets.only(
-            top: 10,
-            bottom: 20,
-            left: 8,
-            right: 8,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
           itemCount: items.length,
           itemBuilder: (context, index) {
-            return DockListItem(item: items[index]);
+            return DockListItem(
+              item: items[index],
+              stationName: viewModel.station?.name ?? "Unknown Station",
+            );
           },
         );
     }

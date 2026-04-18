@@ -29,7 +29,7 @@ class DockListItem extends StatelessWidget {
         hasBike && (status == "booked" || status == "in_use");
 
     return CustomListTile(
-      backgroundColor: Colors.white,
+      backgroundColor: hasBike ? Colors.white : Colors.grey.shade500,
       borderColor: isActuallyAvailable
           ? AppColors.labelgreen.withOpacity(0.3)
           : Colors.grey.shade300,

@@ -20,65 +20,79 @@ class DockListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 1. DATA EXTRACTION
     final bool hasBike = item.isBusy && item.bike != null;
     final String? status = item.bike?.status;
 
-    // LOGIC FIX: Strictly define states
-    final bool isActuallyAvailable = hasBike && status == "available";
-    final bool isAlreadyOccupied =
-        hasBike && (status == "booked" || status == "in_use");
+    // 2. STATE DEFINITIONS (For Conditional UI)
+    final bool isAvailable = hasBike && status == "available";
+    final bool isBooked = hasBike && status == "booked";
+    final bool isInUse = hasBike && status == "in_use";
 
     return CustomListTile(
       backgroundColor: hasBike ? Colors.white : Colors.grey.shade500,
-      borderColor: isActuallyAvailable
+      borderColor: isAvailable
           ? AppColors.labelgreen.withOpacity(0.3)
           : Colors.grey.shade300,
       title: "Dock ${item.dock.dockNumber}",
-      subtitle: hasBike ? "Bike #${item.bike?.id}" : "Empty",
+      subtitle: !hasBike
+          ? "Empty"
+          : (isBooked
+                ? "Reserved"
+                : (isInUse ? "Currently on trip" : "Available")),
       leading: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: isActuallyAvailable
-              ? Colors.green.shade50
-              : Colors.grey.shade100,
+          color: isAvailable ? Colors.green.shade50 : Colors.grey.shade100,
           shape: BoxShape.circle,
         ),
         child: Icon(
           hasBike ? Icons.directions_bike : Icons.not_interested,
-          color: isActuallyAvailable
-              ? AppColors.labelgreen
-              : Colors.grey.shade400,
+          color: isAvailable ? AppColors.labelgreen : Colors.grey.shade400,
           size: 24,
         ),
       ),
+      // 3. CONDITIONAL TRAILING UI
       trailing: hasBike
-          ? CustomButton(
-              // UI FIX: Change button text if the bike is in_use or booked
-              text: isAlreadyOccupied ? "View" : "Unlock",
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => isAlreadyOccupied
-                        ? BookingSuccessScreen(
-                            bike: item.bike!,
-                            dockNumber: item.dock.dockNumber,
-                            stationName: stationName,
-                          )
-                        : BookingScreen(
-                            bike: item.bike!,
-                            dockNumber: item.dock.dockNumber,
-                            stationName: stationName,
-                          ),
-                  ),
-                );
+          ? (isInUse
+                // If in_use, show only text (No Button)
+                ? const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12),
+                    child: Text(
+                      "In Use",
+                      style: TextStyle(
+                        color: Colors.orange,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                // Otherwise, show the Action Button (Unlock or View)
+                : CustomButton(
+                    text: isBooked ? "View" : "Unlock",
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => isBooked
+                              ? BookingSuccessScreen(
+                                  bike: item.bike!,
+                                  dockNumber: item.dock.dockNumber,
+                                  stationName: stationName,
+                                )
+                              : BookingScreen(
+                                  bike: item.bike!,
+                                  dockNumber: item.dock.dockNumber,
+                                  stationName: stationName,
+                                ),
+                        ),
+                      );
 
-                // Refresh the list and header when coming back
-                if (context.mounted) {
-                  context.read<StationDetailViewModel>().refresh();
-                }
-              },
-            )
+                      // Refresh logic when returning
+                      if (context.mounted) {
+                        context.read<StationDetailViewModel>().refresh();
+                      }
+                    },
+                  ))
           : null,
     );
   }

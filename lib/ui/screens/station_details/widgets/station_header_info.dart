@@ -23,9 +23,6 @@ class StationHeader extends StatelessWidget {
       return i.isBusy && i.bike?.status == "available";
     }).length;
 
-    final int totalDocks = items.isNotEmpty ? items.length : station.totalSlots;
-    final int emptyCount = totalDocks - availableCount;
-
     return Container(
       width: double.infinity,
       decoration: const BoxDecoration(
@@ -93,7 +90,7 @@ class StationHeader extends StatelessWidget {
                   Expanded(
                     child: LabelBox(
                       label: "Empty",
-                      value: emptyCount.toString(),
+                      value: station.emptySlots.toString(),
                       color: AppColors.white,
                     ),
                   ),
@@ -101,7 +98,7 @@ class StationHeader extends StatelessWidget {
                   Expanded(
                     child: LabelBox(
                       label: "Total docks",
-                      value: totalDocks.toString(),
+                      value: station.totalSlots.toString(),
                       color: AppColors.white,
                     ),
                   ),

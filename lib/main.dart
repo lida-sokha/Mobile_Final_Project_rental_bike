@@ -14,10 +14,9 @@ import 'main_common.dart';
 
 List<InheritedProvider> get devProviders {
   final StationRepository stationRepository = StationRepositoryFirebase();
-  final BikeRepository bikeRepository = BikeRepositoryFirebase(); // ✅ ADD
+  final BikeRepository bikeRepository = BikeRepositoryFirebase(); //  ADD
 
   return [
-    // 🔵 Station
     Provider<StationRepository>(create: (_) => stationRepository),
     ChangeNotifierProvider<StationViewModel>(
       create: (context) => StationViewModel(
@@ -25,10 +24,8 @@ List<InheritedProvider> get devProviders {
       ),
     ),
 
-    // 🟢 Bike (NEW)
     Provider<BikeRepository>(create: (_) => bikeRepository),
 
-    // 🟡 Booking ViewModel (NEW)
     ChangeNotifierProvider<BookingViewModel>(
       create: (context) => BookingViewModel(context.read<BikeRepository>()),
     ),
